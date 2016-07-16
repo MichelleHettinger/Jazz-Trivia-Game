@@ -23,8 +23,9 @@ $(document).ready(function(){
 })
 
 
- 
+var questionNumber = 1;
 var currentQuestion;
+
 var currentAnswer1;
 var currentAnswer2;
 var currentAnswer3;
@@ -42,17 +43,23 @@ var numUnanswered = 0;
 var timer = {
 
 	time:5,
-	questionNumber:1,
 
 	startRound: function(){
+		if (questionNumber != 11){												//If there are still questions to ask
+		questionsAnswers.assignQuestion();										//Assign the questions	
 		counter = setInterval(timer.count, 1000); 								//Every second, call the count function
+		}
+
+		else if (questionNumber == 11){											//If all questions have been asked
+			updateDisplay.finalPage();											//Show the final page
+		}
 	},
 
 	count: function(){
 		$("#the-answers").removeClass("sr-only");								//For rounds 2-9, make the div visible again
-		$("#the-gifs").html("");
+		$("#the-gifs").html("");												//Replace the gif with emptiness
 
-		questionsAnswers.assignQuestion();										//Display the current question every second
+		updateDisplay.questionAnswers();											//Display the questions and answers
 
 		$("#time-remaining").html("Time remaining: " + timer.time);				//Display time on the html page
 		timer.time--;															//Decrease time by 1
@@ -84,6 +91,15 @@ var timer = {
 
 var updateDisplay = {
 
+	questionAnswers: function (){
+		$("#current-question").html("Q." + questionNumber + " " + currentQuestion);
+		$("#answer1").html("A: " + currentAnswer1);
+		$("#answer2").html("B: " + currentAnswer2);
+		$("#answer3").html("C: " + currentAnswer3);
+		$("#answer4").html("D: " + currentAnswer4);	
+	},
+
+
 	correctGuess: function(){
 		$("#current-question").html("Correct!");								//Update with the correct answer as well
 
@@ -114,7 +130,17 @@ var updateDisplay = {
 		$("#the-answers").addClass("sr-only");									//Remove answers from page
 
 		timer.betweenRound();													//Set a timer to delay next question
-		timer.questionNumber++;													//Increment the questionNumber by 1	
+		questionNumber++;														//Increment the questionNumber by 1	
+	},
+
+	finalPage: function(){
+		$("#the-gifs").remove();												//Remove the last  gif
+
+		//Update with the following:
+		$("#questions").html("<p>Here's how you did.</p>");
+		$("#questions").append("<p>Number Correct: " + numRight + "</p");
+		$("#questions").append("<p>Number Wrong: " + numWrong + "</p");		
+		$("#questions").append("<p>Number Unanswered: " + numUnanswered + "</p");
 	},
 }
 
@@ -122,7 +148,8 @@ var updateDisplay = {
 var questionsAnswers = {
 
 	checkGuess: function(guessedLetter){
-		clearInterval(counter);													//Stop the counter
+		clearInterval(counter);														//Stop the counter
+
 		$("#time-remaining").html("Time remaining: " + timer.time);				//Display time on the html page
 
 		if (guessedLetter == correctAnswer){									//If the selected answer matches the correct
@@ -133,12 +160,13 @@ var questionsAnswers = {
 			updateDisplay.wrongGuess();											//Display
 			numWrong++;															//Increase num of wrong guesses by 1
 		}
+		
 	},
 
 	assignQuestion: function (){
 
 		//Assign currentQuestion as well as the current answers
-		if (timer.questionNumber == 1){
+		if (questionNumber == 1){
 
 			currentQuestion = questionsAnswers.q1;
 			currentAnswer1 = questionsAnswers.q1a1;
@@ -147,7 +175,7 @@ var questionsAnswers = {
 			currentAnswer4 = questionsAnswers.q1a4;
 			correctAnswer = 1;
 		}
-		else if(timer.questionNumber == 2){
+		else if(questionNumber == 2){
 
 			currentQuestion = questionsAnswers.q2;
 			currentAnswer1 = questionsAnswers.q2a1;
@@ -156,7 +184,7 @@ var questionsAnswers = {
 			currentAnswer4 = questionsAnswers.q2a4;
 			correctAnswer = 3;
 		}
-		else if(timer.questionNumber == 3){
+		else if(questionNumber == 3){
 
 			currentQuestion = questionsAnswers.q3;
 			currentAnswer1 = questionsAnswers.q3a1;
@@ -165,7 +193,7 @@ var questionsAnswers = {
 			currentAnswer4 = questionsAnswers.q3a4;
 			correctAnswer = 4;	
 		}
-		else if(timer.questionNumber == 4){
+		else if(questionNumber == 4){
 
 			currentQuestion = questionsAnswers.q4;
 			currentAnswer1 = questionsAnswers.q4a1;
@@ -174,7 +202,7 @@ var questionsAnswers = {
 			currentAnswer4 = questionsAnswers.q4a4;
 			correctAnswer = 2;
 		}
-		else if(timer.questionNumber == 5){
+		else if(questionNumber == 5){
 			currentQuestion = questionsAnswers.q5;
 			currentAnswer1 = questionsAnswers.q5a1;
 			currentAnswer2 = questionsAnswers.q5a2;
@@ -191,7 +219,7 @@ var questionsAnswers = {
 			currentAnswer4 = questionsAnswers.q6a4;
 			correctAnswer = 3;
 		}
-		else if(timer.questionNumber == 7){
+		else if(questionNumber == 7){
 
 			currentQuestion = questionsAnswers.q7;
 			currentAnswer1 = questionsAnswers.q7a1;
@@ -200,7 +228,7 @@ var questionsAnswers = {
 			currentAnswer4 = questionsAnswers.q7a4;
 			correctAnswer = 4;	
 		}
-		else if(timer.questionNumber == 8){
+		else if(questionNumber == 8){
 
 			currentQuestion = questionsAnswers.q8;
 			currentAnswer1 = questionsAnswers.q8a1;
@@ -209,7 +237,7 @@ var questionsAnswers = {
 			currentAnswer4 = questionsAnswers.q8a4;
 			correctAnswer = 2;	
 		}
-		else if(timer.questionNumber == 9){
+		else if(questionNumber == 9){
 
 			currentQuestion = questionsAnswers.q9;
 			currentAnswer1 = questionsAnswers.q9a1;
@@ -218,7 +246,7 @@ var questionsAnswers = {
 			currentAnswer4 = questionsAnswers.q9a4;
 			correctAnswer = 3;
 		}
-		else if(timer.questionNumber == 10){
+		else if(questionNumber == 10){
 
 			currentQuestion = questionsAnswers.q10;
 			currentAnswer1 = questionsAnswers.q10a1;
@@ -226,14 +254,6 @@ var questionsAnswers = {
 			currentAnswer3 = questionsAnswers.q10a3;
 			currentAnswer4 = questionsAnswers.q10a4;
 			correctAnswer = 1;	
-		}
-		if (timer.questionNumber <= 10){
-			//Write the strings to html
-			$("#current-question").html(currentQuestion);
-			$("#answer1").html("A: " + currentAnswer1);
-			$("#answer2").html("B: " + currentAnswer2);
-			$("#answer3").html("C: " + currentAnswer3);
-			$("#answer4").html("D: " + currentAnswer4);	
 		}
 	},
 
@@ -287,9 +307,4 @@ var questionsAnswers = {
 		q10a2: "jjjjj doot doot doot doot doot",
 		q10a3: "jjjjj doot doot doot doot doot",
 		q10a4: "jjjjj doot doot doot doot doot",	
-
-
-
-
-
 }
