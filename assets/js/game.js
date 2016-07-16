@@ -1,39 +1,58 @@
 //When the document is ready, perform this function.
 $(document).ready(function(){
-	timer.start();
+	timer.startRound();
 
-	$(".answer").on("click", questions);
-
-
+	$("#answer1").on("click", function (){
+		currentGuess = 1;
+		questionsAnswers.checkGuess(currentGuess);
+	});
+	$("#answer2").on("click", function (){
+		currentGuess = 2;
+		questionsAnswers.checkGuess(currentGuess);
+	});
+	$("#answer3").on("click", function (){
+		currentGuess = 3;
+		questionsAnswers.checkGuess(currentGuess);
+	});
+	$("#answer4").on("click", function (){
+		currentGuess = 4;
+		questionsAnswers.checkGuess(currentGuess);
+	});	
 })
 
+
+ 
 var currentQuestion;
 var currentAnswer1;
 var currentAnswer2;
 var currentAnswer3;
 var currentAnswer4;
 
+var currentGuess;
+var correctAnswer;
+
 
 
 var timer = {
 
-	time:3,
+	time:5,
 	questionNumber:1,
 
-	start: function(){
-		counter = setInterval(timer.count, 1000); 			//Every second, call the count function
+	startRound: function(){
+		counter = setInterval(timer.count, 1000); 								//Every second, call the count function
 	},
+
 
 	count: function(){
 
-		questionsAnswers.displayQuestion();						//Display the current question every second
+		questionsAnswers.displayQuestion();										//Display the current question every second
 
-		$("#time-remaining").html(timer.time);				//Display time on the html page
-		timer.time--;										//Decrease time by 1
+		$("#time-remaining").html("Time remaining: " + timer.time);				//Display time on the html page
+		timer.time--;															//Decrease time by 1
 
-		if (timer.time == 0){								//If time reaches zero
-			timer.time = 3;									//Set time back to 60
-			timer.questionNumber++;							//Increment the questionNumber by 1
+		if (timer.time == 0){													//If time reaches zero
+			clearInterval(counter);												//Stop the counter
+			questionsAnswers.displayOutOfTime();								//Display the answer
 		}
 
 	},
@@ -41,99 +60,34 @@ var timer = {
 
 var questionsAnswers = {
 
-	displayQuestion: function (){
+	checkGuess: function(guessedLetter){
+		clearInterval(counter);													//Stop the counter
+		$("#time-remaining").html("Time remaining: " + timer.time);				//Display time on the html page
 
-		//Assign currentQuestion as well as the current answers
-		if (timer.questionNumber == 1){
-
-			currentQuestion = questionsAnswers.q1;
-			currentAnswer1 = questionsAnswers.q1a1;
-			currentAnswer2 = questionsAnswers.q1a2;
-			currentAnswer3 = questionsAnswers.q1a3;
-			currentAnswer4 = questionsAnswers.q1a4;
+		if (guessedLetter == correctAnswer){
+			questionsAnswers.displayCorrectGuess();
 		}
-		else if(timer.questionNumber == 2){
-
-			currentQuestion = questionsAnswers.q2;
-			currentAnswer1 = questionsAnswers.q2a1;
-			currentAnswer2 = questionsAnswers.q2a2;
-			currentAnswer3 = questionsAnswers.q2a3;
-			currentAnswer4 = questionsAnswers.q2a4;
+		else {
+			questionsAnswers.displayWrongGuess();
 		}
-		else if(timer.questionNumber == 3){
-
-			currentQuestion = questionsAnswers.q3;
-			currentAnswer1 = questionsAnswers.q3a1;
-			currentAnswer2 = questionsAnswers.q3a2;
-			currentAnswer3 = questionsAnswers.q3a3;
-			currentAnswer4 = questionsAnswers.q3a4;		
-		}
-		else if(timer.questionNumber == 4){
-
-			currentQuestion = questionsAnswers.q4;
-			currentAnswer1 = questionsAnswers.q4a1;
-			currentAnswer2 = questionsAnswers.q4a2;
-			currentAnswer3 = questionsAnswers.q4a3;
-			currentAnswer4 = questionsAnswers.q4a4;	
-		}
-		else if(timer.questionNumber == 5){
-			currentQuestion = questionsAnswers.q5;
-			currentAnswer1 = questionsAnswers.q5a1;
-			currentAnswer2 = questionsAnswers.q5a2;
-			currentAnswer3 = questionsAnswers.q5a3;
-			currentAnswer4 = questionsAnswers.q5a4;	
-		}
-		else if(timer.questionNumber == 6){
-
-			currentQuestion = questionsAnswers.q6;
-			currentAnswer1 = questionsAnswers.q6a1;
-			currentAnswer2 = questionsAnswers.q6a2;
-			currentAnswer3 = questionsAnswers.q6a3;
-			currentAnswer4 = questionsAnswers.q6a4;	
-		}
-		else if(timer.questionNumber == 7){
-
-			currentQuestion = questionsAnswers.q7;
-			currentAnswer1 = questionsAnswers.q7a1;
-			currentAnswer2 = questionsAnswers.q7a2;
-			currentAnswer3 = questionsAnswers.q7a3;
-			currentAnswer4 = questionsAnswers.q7a4;		
-		}
-		else if(timer.questionNumber == 8){
-
-			currentQuestion = questionsAnswers.q8;
-			currentAnswer1 = questionsAnswers.q8a1;
-			currentAnswer2 = questionsAnswers.q8a2;
-			currentAnswer3 = questionsAnswers.q8a3;
-			currentAnswer4 = questionsAnswers.q8a4;	
-		}
-		else if(timer.questionNumber == 9){
-
-			currentQuestion = questionsAnswers.q9;
-			currentAnswer1 = questionsAnswers.q9a1;
-			currentAnswer2 = questionsAnswers.q9a2;
-			currentAnswer3 = questionsAnswers.q9a3;
-			currentAnswer4 = questionsAnswers.q9a4;	
-		}
-		else if(timer.questionNumber == 10){
-
-			currentQuestion = questionsAnswers.q10;
-			currentAnswer1 = questionsAnswers.q10a1;
-			currentAnswer2 = questionsAnswers.q10a2;
-			currentAnswer3 = questionsAnswers.q10a3;
-			currentAnswer4 = questionsAnswers.q10a4;	
-		}
-
-		//Write the strings to html
-		$("#current-question").html(currentQuestion);
-		$("#answer1").html("A: " + currentAnswer1);
-		$("#answer2").html("B: " + currentAnswer2);
-		$("#answer3").html("C: " + currentAnswer3);
-		$("#answer4").html("D: " + currentAnswer4);	
-
 	},
 
+	//answerkey: a, c, d, b, a, c, d, b, c, a
+	displayCorrectGuess: function(){
+		$("#current-question").html("Correct!");							//Update with the correct answer as well
+	},
 
+	displayWrongGuess: function(){
+		$("#current-question").html("The correct answer was: ");			//Update with the correct answer as well
+	},
+
+	displayOutOfTime: function(){
+		$("#time-remaining").html("Time remaining: " + timer.time);			//Display time on the html page
+		$("#time-remaining").append("<p>Out of time!</p>");					//Write a paragraph to the page that says out of time
+		$("#current-question").html("The correct answer was: ");			//Update with the correct answer as well
+
+		timer.questionNumber++;												//Increment the questionNumber by 1
+	},
 
 
 	q1:"Alaaaaaaaaaaaaaaaaaaaaah? blah? blah? blah? blah? blah? blah? blah?",
@@ -186,4 +140,112 @@ var questionsAnswers = {
 		q10a2: "jjjjj doot doot doot doot doot",
 		q10a3: "jjjjj doot doot doot doot doot",
 		q10a4: "jjjjj doot doot doot doot doot",	
+
+
+
+	displayQuestion: function (){
+
+		//Assign currentQuestion as well as the current answers
+		if (timer.questionNumber == 1){
+
+			currentQuestion = questionsAnswers.q1;
+			currentAnswer1 = questionsAnswers.q1a1;
+			currentAnswer2 = questionsAnswers.q1a2;
+			currentAnswer3 = questionsAnswers.q1a3;
+			currentAnswer4 = questionsAnswers.q1a4;
+			correctAnswer = 1;
+		}
+		else if(timer.questionNumber == 2){
+
+			currentQuestion = questionsAnswers.q2;
+			currentAnswer1 = questionsAnswers.q2a1;
+			currentAnswer2 = questionsAnswers.q2a2;
+			currentAnswer3 = questionsAnswers.q2a3;
+			currentAnswer4 = questionsAnswers.q2a4;
+			correctAnswer = 3;
+		}
+		else if(timer.questionNumber == 3){
+
+			currentQuestion = questionsAnswers.q3;
+			currentAnswer1 = questionsAnswers.q3a1;
+			currentAnswer2 = questionsAnswers.q3a2;
+			currentAnswer3 = questionsAnswers.q3a3;
+			currentAnswer4 = questionsAnswers.q3a4;
+			correctAnswer = 4;	
+		}
+		else if(timer.questionNumber == 4){
+
+			currentQuestion = questionsAnswers.q4;
+			currentAnswer1 = questionsAnswers.q4a1;
+			currentAnswer2 = questionsAnswers.q4a2;
+			currentAnswer3 = questionsAnswers.q4a3;
+			currentAnswer4 = questionsAnswers.q4a4;
+			correctAnswer = 2;
+		}
+		else if(timer.questionNumber == 5){
+			currentQuestion = questionsAnswers.q5;
+			currentAnswer1 = questionsAnswers.q5a1;
+			currentAnswer2 = questionsAnswers.q5a2;
+			currentAnswer3 = questionsAnswers.q5a3;
+			currentAnswer4 = questionsAnswers.q5a4;
+			correctAnswer = 1;
+		}
+		else if(timer.questionNumber == 6){
+
+			currentQuestion = questionsAnswers.q6;
+			currentAnswer1 = questionsAnswers.q6a1;
+			currentAnswer2 = questionsAnswers.q6a2;
+			currentAnswer3 = questionsAnswers.q6a3;
+			currentAnswer4 = questionsAnswers.q6a4;
+			correctAnswer = 3;
+		}
+		else if(timer.questionNumber == 7){
+
+			currentQuestion = questionsAnswers.q7;
+			currentAnswer1 = questionsAnswers.q7a1;
+			currentAnswer2 = questionsAnswers.q7a2;
+			currentAnswer3 = questionsAnswers.q7a3;
+			currentAnswer4 = questionsAnswers.q7a4;
+			correctAnswer = 4;	
+		}
+		else if(timer.questionNumber == 8){
+
+			currentQuestion = questionsAnswers.q8;
+			currentAnswer1 = questionsAnswers.q8a1;
+			currentAnswer2 = questionsAnswers.q8a2;
+			currentAnswer3 = questionsAnswers.q8a3;
+			currentAnswer4 = questionsAnswers.q8a4;
+			correctAnswer = 2;	
+		}
+		else if(timer.questionNumber == 9){
+
+			currentQuestion = questionsAnswers.q9;
+			currentAnswer1 = questionsAnswers.q9a1;
+			currentAnswer2 = questionsAnswers.q9a2;
+			currentAnswer3 = questionsAnswers.q9a3;
+			currentAnswer4 = questionsAnswers.q9a4;
+			correctAnswer = 3;
+		}
+		else if(timer.questionNumber == 10){
+
+			currentQuestion = questionsAnswers.q10;
+			currentAnswer1 = questionsAnswers.q10a1;
+			currentAnswer2 = questionsAnswers.q10a2;
+			currentAnswer3 = questionsAnswers.q10a3;
+			currentAnswer4 = questionsAnswers.q10a4;
+			correctAnswer = 1;	
+		}
+		if (timer.questionNumber <= 10){
+			//Write the strings to html
+			$("#current-question").html(currentQuestion);
+			$("#answer1").html("A: " + currentAnswer1);
+			$("#answer2").html("B: " + currentAnswer2);
+			$("#answer3").html("C: " + currentAnswer3);
+			$("#answer4").html("D: " + currentAnswer4);	
+		}
+		// else if(timer.questionNumber == 11){
+		// 	$("#")
+		// }
+	},
+
 }
