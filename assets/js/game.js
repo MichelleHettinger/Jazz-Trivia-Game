@@ -1,7 +1,9 @@
 //When the document is ready, perform this function.
 $(document).ready(function(){
-	timer.startRound();
-
+	$("#startButton").on("click", function (){
+		$("#startButton").remove();
+		timer.startRound();
+	});
 	$("#answer1").on("click", function (){
 		currentGuess = 1;
 		questionsAnswers.checkGuess(currentGuess);
