@@ -31,7 +31,11 @@ var currentAnswer4;
 var currentGuess;
 var correctAnswer;
 
+var numRight = 0;
+var numWrong = 0;
+var numUnanswered = 0;
 
+//answerkey: a, c, d, b, a, c, d, b, c, a
 
 var timer = {
 
@@ -42,21 +46,76 @@ var timer = {
 		counter = setInterval(timer.count, 1000); 								//Every second, call the count function
 	},
 
-
 	count: function(){
+		$("#the-answers").removeClass("sr-only");								//For rounds 2-9, make the div visible again
+		$("#the-gifs").html("");
 
-		questionsAnswers.displayQuestion();										//Display the current question every second
+		questionsAnswers.assignQuestion();										//Display the current question every second
 
 		$("#time-remaining").html("Time remaining: " + timer.time);				//Display time on the html page
 		timer.time--;															//Decrease time by 1
 
 		if (timer.time == 0){													//If time reaches zero
 			clearInterval(counter);												//Stop the counter
-			questionsAnswers.displayOutOfTime();								//Display the answer
+			updateDisplay.outOfTime();											//Display the answer
+			numUnanswered++;													//Increase num of unanswered by 1
 		}
+	},
+
+	betweenRound: function(){													//Need this function to delay time between rounds
+		timer.time = 2;															//Change time to just a few seconds
+		counter2 = setInterval(timer.betweenCount, 1000); 						//Every second, call the count function
 
 	},
+	betweenCount: function(){													//Need this function to delay time between rounds
+		timer.time --;
+
+		if (timer.time == 0){													//If time reaches zero
+			clearInterval(counter2);											//Stop the counter
+			timer.time = 5;														//Return timer to original value
+			timer.startRound();													//Start round again
+		}
+
+	},	
 }
+
+
+var updateDisplay = {
+
+	correctGuess: function(){
+		$("#current-question").html("Correct!");								//Update with the correct answer as well
+
+		updateDisplay.betweenGuesses();											//Update by removing answers	
+
+		$("#the-gifs").html("<p>Win</p>");										//Updatet with the winning gif and setting timer			
+	},
+
+	wrongGuess: function(){
+		$("#current-question").html("The correct answer was: " + correctAnswer);		//Update with the correct answer as well
+
+		updateDisplay.betweenGuesses();													//Update by removing answers			
+
+		$("#the-gifs").html("<p>Lose</p>");												//Update with the losing gif
+	},
+
+	outOfTime: function(){
+		$("#time-remaining").html("Time remaining: " + timer.time);				//Display time on the html page
+		$("#time-remaining").append("<p>Out of time!</p>");						//Write a paragraph to the page that says out of time
+
+		$("#current-question").html("The correct answer was: ");				//Update with the correct answer as well
+		$("#the-gifs").html("<p>Lose</p>");										//Update with the losing gif
+
+		updateDisplay.betweenGuesses();											//Update by removing answers and adding gifs	
+	},
+
+	betweenGuesses: function(){
+		$("#the-answers").addClass("sr-only");									//Remove answers from page
+
+		timer.betweenRound();													//Set a timer to delay next question
+		timer.questionNumber++;													//Increment the questionNumber by 1	
+	},
+}
+
 
 var questionsAnswers = {
 
@@ -64,86 +123,17 @@ var questionsAnswers = {
 		clearInterval(counter);													//Stop the counter
 		$("#time-remaining").html("Time remaining: " + timer.time);				//Display time on the html page
 
-		if (guessedLetter == correctAnswer){
-			questionsAnswers.displayCorrectGuess();
+		if (guessedLetter == correctAnswer){									//If the selected answer matches the correct
+			updateDisplay.correctGuess();										//Display
+			numRight++;															//Increase num of correct guesses by 1
 		}
-		else {
-			questionsAnswers.displayWrongGuess();
+		else {																	//Otherwise answer is wrong
+			updateDisplay.wrongGuess();											//Display
+			numWrong++;															//Increase num of wrong guesses by 1
 		}
 	},
 
-	//answerkey: a, c, d, b, a, c, d, b, c, a
-	displayCorrectGuess: function(){
-		$("#current-question").html("Correct!");							//Update with the correct answer as well
-	},
-
-	displayWrongGuess: function(){
-		$("#current-question").html("The correct answer was: ");			//Update with the correct answer as well
-	},
-
-	displayOutOfTime: function(){
-		$("#time-remaining").html("Time remaining: " + timer.time);			//Display time on the html page
-		$("#time-remaining").append("<p>Out of time!</p>");					//Write a paragraph to the page that says out of time
-		$("#current-question").html("The correct answer was: ");			//Update with the correct answer as well
-
-		timer.questionNumber++;												//Increment the questionNumber by 1
-	},
-
-
-	q1:"Alaaaaaaaaaaaaaaaaaaaaah? blah? blah? blah? blah? blah? blah? blah?",
-		q1a1: "doot doot doot doot doot doot",
-		q1a2: "doot doot doot doot doot doot",
-		q1a3: "doot doot doot doot doot doot",
-		q1a4: "doot doot doot doot doot doot",
-	q2:"Bbbbbbbbbbbbah? blah? blah? blah? blah? blah? blah? blah? blah?",
-		q2a1: "boot doot doot doot doot doot",
-		q2a2: "boot doot doot doot doot doot",
-		q2a3: "bbbbot doot doot doot doot doot",
-		q2a4: "bbbt doot doot doot doot doot",	
-	q3:"ccccccccccclah blah? blah? blah? blah? blah? blah? blah? blah? blah?",
-		q3a1: "ccccccdoot doot doot doot doot",
-		q3a2: "ccccccdoot doot doot doot doot",
-		q3a3: "ccccc doot doot doot doot doot",
-		q3a4: "cccccdoot doot doot doot doot",	
-	q4:"dddddddddddddddddh blah? blah? blah? blah? blah? blah? blah? blah? blah?",
-		q4a1: "dddddddt doot doot doot doot",
-		q4a2: "dddddddt doot doot doot doot",
-		q4a3: "dddd doot doot doot doot",
-		q4a4: "dddddoot doot doot doot",	
-	q5:"eeeeeeeeeeeeeelah blah? blah? blah? blah? blah? blah? blah? blah? blah?",
-		q5a1: "eeeeeedoot doot doot doot doot",
-		q5a2: "eeeee doot doot doot doot doot",
-		q5a3: "eeee doot doot doot doot doot",
-		q5a4: "eeee doot doot doot doot doot",	
-	q6:"ffffffffffffh blah? blah? blah? blah? blah? blah? blah? blah? blah?",
-		q6a1: "fffff doot doot doot doot doot",
-		q6a2: "doffffot doot doot doot doot doot",
-		q6a3: "ffff doot doot doot doot doot",
-		q6a4: "fffff doot doot doot doot doot",	
-	q7:"gggggggggggglah blah? blah? blah? blah? blah? blah? blah? blah? blah?",
-		q7a1: "gggg doot doot doot doot doot",
-		q7a2: "gggg doot doot doot doot doot",
-		q7a3: "gggg doot doot doot doot doot",
-		q7a4: "gggg doot doot doot doot doot",	
-	q8:"hhhhhhhhhhhhhh blah blah? blah? blah? blah? blah? blah? blah? blah? blah?",
-		q8a1: "hhhhhh doot doot doot doot doot",
-		q8a2: "hhhhhh doot doot doot doot doot",
-		q8a3: "hhhhhh doot doot doot doot doot",
-		q8a4: "hhhhh doot doot doot doot doot",	
-	q9:"iiiiiii blah? blah? blah? blah? blah? blah? blah? blah? blah?",
-		q9a1: "iiiiii doot doot doot doot doot",
-		q9a2: "iiiiii doot doot doot doot doot",
-		q9a3: "iiiii doot doot doot doot doot",
-		q9a4: "iiiii doot doot doot doot doot",		
-	q10:"jjjjjjjjjjjjjjjjblah blah? blah? blah? blah? blah? blah? blah? blah? blah?",
-		q10a1: "jjjjj doot doot doot doot doot",
-		q10a2: "jjjjj doot doot doot doot doot",
-		q10a3: "jjjjj doot doot doot doot doot",
-		q10a4: "jjjjj doot doot doot doot doot",	
-
-
-
-	displayQuestion: function (){
+	assignQuestion: function (){
 
 		//Assign currentQuestion as well as the current answers
 		if (timer.questionNumber == 1){
@@ -243,9 +233,61 @@ var questionsAnswers = {
 			$("#answer3").html("C: " + currentAnswer3);
 			$("#answer4").html("D: " + currentAnswer4);	
 		}
-		// else if(timer.questionNumber == 11){
-		// 	$("#")
-		// }
 	},
+
+	q1:"Alaaaaaaaaaaaaaaaaaaaaah? blah? blah? blah? blah? blah? blah? blah?",
+		q1a1: "doot doot doot doot doot doot",
+		q1a2: "doot doot doot doot doot doot",
+		q1a3: "doot doot doot doot doot doot",
+		q1a4: "doot doot doot doot doot doot",
+	q2:"Bbbbbbbbbbbbah? blah? blah? blah? blah? blah? blah? blah? blah?",
+		q2a1: "boot doot doot doot doot doot",
+		q2a2: "boot doot doot doot doot doot",
+		q2a3: "bbbbot doot doot doot doot doot",
+		q2a4: "bbbt doot doot doot doot doot",	
+	q3:"ccccccccccclah blah? blah? blah? blah? blah? blah? blah? blah? blah?",
+		q3a1: "ccccccdoot doot doot doot doot",
+		q3a2: "ccccccdoot doot doot doot doot",
+		q3a3: "ccccc doot doot doot doot doot",
+		q3a4: "cccccdoot doot doot doot doot",	
+	q4:"dddddddddddddddddh blah? blah? blah? blah? blah? blah? blah? blah? blah?",
+		q4a1: "dddddddt doot doot doot doot",
+		q4a2: "dddddddt doot doot doot doot",
+		q4a3: "dddd doot doot doot doot",
+		q4a4: "dddddoot doot doot doot",	
+	q5:"eeeeeeeeeeeeeelah blah? blah? blah? blah? blah? blah? blah? blah? blah?",
+		q5a1: "eeeeeedoot doot doot doot doot",
+		q5a2: "eeeee doot doot doot doot doot",
+		q5a3: "eeee doot doot doot doot doot",
+		q5a4: "eeee doot doot doot doot doot",	
+	q6:"ffffffffffffh blah? blah? blah? blah? blah? blah? blah? blah? blah?",
+		q6a1: "fffff doot doot doot doot doot",
+		q6a2: "doffffot doot doot doot doot doot",
+		q6a3: "ffff doot doot doot doot doot",
+		q6a4: "fffff doot doot doot doot doot",	
+	q7:"gggggggggggglah blah? blah? blah? blah? blah? blah? blah? blah? blah?",
+		q7a1: "gggg doot doot doot doot doot",
+		q7a2: "gggg doot doot doot doot doot",
+		q7a3: "gggg doot doot doot doot doot",
+		q7a4: "gggg doot doot doot doot doot",	
+	q8:"hhhhhhhhhhhhhh blah blah? blah? blah? blah? blah? blah? blah? blah? blah?",
+		q8a1: "hhhhhh doot doot doot doot doot",
+		q8a2: "hhhhhh doot doot doot doot doot",
+		q8a3: "hhhhhh doot doot doot doot doot",
+		q8a4: "hhhhh doot doot doot doot doot",	
+	q9:"iiiiiii blah? blah? blah? blah? blah? blah? blah? blah? blah?",
+		q9a1: "iiiiii doot doot doot doot doot",
+		q9a2: "iiiiii doot doot doot doot doot",
+		q9a3: "iiiii doot doot doot doot doot",
+		q9a4: "iiiii doot doot doot doot doot",		
+	q10:"jjjjjjjjjjjjjjjjblah blah? blah? blah? blah? blah? blah? blah? blah? blah?",
+		q10a1: "jjjjj doot doot doot doot doot",
+		q10a2: "jjjjj doot doot doot doot doot",
+		q10a3: "jjjjj doot doot doot doot doot",
+		q10a4: "jjjjj doot doot doot doot doot",	
+
+
+
+
 
 }
