@@ -161,10 +161,11 @@ var updateDisplay = {
 		$("#the-gifs").remove();												//Remove the last  gif
 
 		//Update with the following:
-		$("#questions").html("<p>Here's how you did.</p>");
-		$("#questions").append("<p>Number Correct: " + numRight + "</p");
-		$("#questions").append("<p>Number Wrong: " + numWrong + "</p");		
-		$("#questions").append("<p>Number Unanswered: " + numUnanswered + "</p");
+		$("#answer1").html("Here's how you did.");
+		$("#answer2").html("Number Correct: " + numRight);
+		$("#answer3").html("Number Wrong: " + numWrong);		
+		$("#answer4").html("Number Unanswered: " + numUnanswered);
+		$("#the-answers").removeClass("sr-only");								//Make div visible again from page			
 	},
 }
 
@@ -172,7 +173,7 @@ var updateDisplay = {
 var questionsAnswers = {
 
 	checkGuess: function(guessedLetter){
-		clearInterval(counter);														//Stop the counter
+		clearInterval(counter);													//Stop the counter
 
 		$("#time-remaining").html("Time remaining: " + timer.time);				//Display time on the html page
 
@@ -189,7 +190,7 @@ var questionsAnswers = {
 
 	assignQuestion: function (){
 
-		//Assign currentQuestion as well as the current answers
+		//Assign currentQuestion as well as the current answers and images
 		if (questionNumber == 1){
 
 			currentQuestion = questionsAnswers.q1;
