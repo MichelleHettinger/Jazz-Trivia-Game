@@ -34,6 +34,10 @@ var currentAnswer4;
 var currentGuess;
 var correctAnswer;
 
+var winImageHTML;
+var loseImageHTML;
+
+
 var numRight = 0;
 var numWrong = 0;
 var numUnanswered = 0;
@@ -120,7 +124,7 @@ var updateDisplay = {
 
 		updateDisplay.betweenGuesses();											//Update by removing answers	
 
-		$("#the-gifs").html("<p>Win</p>");										//Updatet with the winning gif and setting timer			
+		$("#the-gifs").html(winImageHTML);										//Updatet with the winning gif and setting timer			
 	},
 
 	wrongGuess: function(){
@@ -129,17 +133,17 @@ var updateDisplay = {
 
 		updateDisplay.betweenGuesses();															//Update by removing answers			
 
-		$("#the-gifs").html("<p>Lose</p>");														//Update with the losing gif
+		$("#the-gifs").html(loseImageHTML);														//Update with the losing gif
 	},
 
 	outOfTime: function(){
 		updateDisplay.convertCorrectAnswerToText(correctAnswer);								//Convert correctAnswer (a numerical value) to the string containing the right answer
-		
+
 		$("#time-remaining").html("Time remaining: " + timer.time);								//Display time on the html page
 		$("#time-remaining").append("<p>Out of time!</p>");										//Write a paragraph to the page that says out of time
 
 		$("#current-question").html("The correct answer was: " + correctAnswer);				//Update with the correct answer as well
-		$("#the-gifs").html("<p>Lose</p>");														//Update with the losing gif
+		$("#the-gifs").html(loseImageHTML);														//Update with the losing gif
 
 		updateDisplay.betweenGuesses();															//Update by removing answers and adding gifs	
 	},
@@ -194,6 +198,8 @@ var questionsAnswers = {
 			currentAnswer3 = questionsAnswers.q1a3;
 			currentAnswer4 = questionsAnswers.q1a4;
 			correctAnswer = 1;
+			loseImageHTML = "<img src='assets/images/q1L.png' />";
+			winImageHTML = "<img src='assets/images/q1W.png' />";			
 		}
 		else if(questionNumber == 2){
 
@@ -203,6 +209,8 @@ var questionsAnswers = {
 			currentAnswer3 = questionsAnswers.q2a3;
 			currentAnswer4 = questionsAnswers.q2a4;
 			correctAnswer = 3;
+			loseImageHTML = "<img src='assets/images/q2L.png' />";
+			winImageHTML = "<img src='assets/images/q2W.png' />";				
 		}
 		else if(questionNumber == 3){
 
@@ -211,7 +219,9 @@ var questionsAnswers = {
 			currentAnswer2 = questionsAnswers.q3a2;
 			currentAnswer3 = questionsAnswers.q3a3;
 			currentAnswer4 = questionsAnswers.q3a4;
-			correctAnswer = 4;	
+			correctAnswer = 4;
+			loseImageHTML = "<img src='assets/images/q3L.png' />";
+			winImageHTML = "<img src='assets/images/q3W.png' />";
 		}
 		else if(questionNumber == 4){
 
@@ -221,6 +231,8 @@ var questionsAnswers = {
 			currentAnswer3 = questionsAnswers.q4a3;
 			currentAnswer4 = questionsAnswers.q4a4;
 			correctAnswer = 2;
+			loseImageHTML = "<img src='assets/images/q4L.png' />";
+			winImageHTML = "<img src='assets/images/q4W.png' />";			
 		}
 		else if(questionNumber == 5){
 			currentQuestion = questionsAnswers.q5;
@@ -229,6 +241,8 @@ var questionsAnswers = {
 			currentAnswer3 = questionsAnswers.q5a3;
 			currentAnswer4 = questionsAnswers.q5a4;
 			correctAnswer = 1;
+			loseImageHTML = "<img src='assets/images/q5L.png' />";
+			winImageHTML = "<img src='assets/images/q5W.png' />";			
 		}
 		else if(timer.questionNumber == 6){
 
@@ -238,6 +252,8 @@ var questionsAnswers = {
 			currentAnswer3 = questionsAnswers.q6a3;
 			currentAnswer4 = questionsAnswers.q6a4;
 			correctAnswer = 3;
+			loseImageHTML = "<img src='assets/images/q6L.png' />";
+			winImageHTML = "<img src='assets/images/q6W.png' />";				
 		}
 		else if(questionNumber == 7){
 
@@ -247,6 +263,8 @@ var questionsAnswers = {
 			currentAnswer3 = questionsAnswers.q7a3;
 			currentAnswer4 = questionsAnswers.q7a4;
 			correctAnswer = 4;	
+			loseImageHTML = "<img src='assets/images/q7L.png' />";
+			winImageHTML = "<img src='assets/images/q7W.png' />";				
 		}
 		else if(questionNumber == 8){
 
@@ -256,6 +274,8 @@ var questionsAnswers = {
 			currentAnswer3 = questionsAnswers.q8a3;
 			currentAnswer4 = questionsAnswers.q8a4;
 			correctAnswer = 2;	
+			loseImageHTML = "<img src='assets/images/q8L.png' />";
+			winImageHTML = "<img src='assets/images/q8W.png' />";				
 		}
 		else if(questionNumber == 9){
 
@@ -265,6 +285,8 @@ var questionsAnswers = {
 			currentAnswer3 = questionsAnswers.q9a3;
 			currentAnswer4 = questionsAnswers.q9a4;
 			correctAnswer = 3;
+			loseImageHTML = "<img src='assets/images/q9L.png' />";
+			winImageHTML = "<img src='assets/images/q9W.png' />";			
 		}
 		else if(questionNumber == 10){
 
@@ -274,6 +296,8 @@ var questionsAnswers = {
 			currentAnswer3 = questionsAnswers.q10a3;
 			currentAnswer4 = questionsAnswers.q10a4;
 			correctAnswer = 1;	
+			loseImageHTML = "<img src='assets/images/q10L.png' />";
+			winImageHTML = "<img src='assets/images/q10W.png' />";			
 		}
 	},
 
