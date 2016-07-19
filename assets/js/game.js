@@ -92,11 +92,26 @@ var timer = {
 var updateDisplay = {
 
 	questionAnswers: function (){
-		$("#current-question").html("Q." + questionNumber + " " + currentQuestion);
+		$("#current-question").html(currentQuestion);
 		$("#answer1").html("A: " + currentAnswer1);
 		$("#answer2").html("B: " + currentAnswer2);
 		$("#answer3").html("C: " + currentAnswer3);
 		$("#answer4").html("D: " + currentAnswer4);	
+	},
+
+	convertCorrectAnswerToText: function(CA){
+		if (CA == 1){
+			correctAnswer = currentAnswer1;
+		}
+		else if (CA == 2){
+			correctAnswer = currentAnswer2;
+		}
+		else if (CA == 3){
+			correctAnswer = currentAnswer3;
+		}
+		else if (CA == 4){
+			correctAnswer = currentAnswer3;
+		}
 	},
 
 
@@ -109,22 +124,27 @@ var updateDisplay = {
 	},
 
 	wrongGuess: function(){
-		$("#current-question").html("The correct answer was: " + correctAnswer);		//Update with the correct answer as well
+		updateDisplay.convertCorrectAnswerToText(correctAnswer);								//Convert correctAnswer (a numerical value) to the string containing the right answer
+		$("#current-question").html("The correct answer was: " + correctAnswer);				//Update with the correct answer as well
 
-		updateDisplay.betweenGuesses();													//Update by removing answers			
+		updateDisplay.betweenGuesses();															//Update by removing answers			
 
-		$("#the-gifs").html("<p>Lose</p>");												//Update with the losing gif
+		$("#the-gifs").html("<p>Lose</p>");														//Update with the losing gif
 	},
 
 	outOfTime: function(){
-		$("#time-remaining").html("Time remaining: " + timer.time);				//Display time on the html page
-		$("#time-remaining").append("<p>Out of time!</p>");						//Write a paragraph to the page that says out of time
+		updateDisplay.convertCorrectAnswerToText(correctAnswer);								//Convert correctAnswer (a numerical value) to the string containing the right answer
+		
+		$("#time-remaining").html("Time remaining: " + timer.time);								//Display time on the html page
+		$("#time-remaining").append("<p>Out of time!</p>");										//Write a paragraph to the page that says out of time
 
-		$("#current-question").html("The correct answer was: ");				//Update with the correct answer as well
-		$("#the-gifs").html("<p>Lose</p>");										//Update with the losing gif
+		$("#current-question").html("The correct answer was: " + correctAnswer);				//Update with the correct answer as well
+		$("#the-gifs").html("<p>Lose</p>");														//Update with the losing gif
 
-		updateDisplay.betweenGuesses();											//Update by removing answers and adding gifs	
+		updateDisplay.betweenGuesses();															//Update by removing answers and adding gifs	
 	},
+
+
 
 	betweenGuesses: function(){
 		$("#the-answers").addClass("sr-only");									//Remove answers from page
