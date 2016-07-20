@@ -191,165 +191,78 @@ var questionsAnswers = {
 	assignQuestion: function (){
 
 		//Assign currentQuestion as well as the current answers and images
-		if (questionNumber == 1){
-
-			currentQuestion = questionsAnswers.q1;
-			currentAnswer1 = questionsAnswers.q1a1;
-			currentAnswer2 = questionsAnswers.q1a2;
-			currentAnswer3 = questionsAnswers.q1a3;
-			currentAnswer4 = questionsAnswers.q1a4;
+			currentQuestion = questionsAndAnswers[questionNumber - 1].question;
+			currentAnswer1 = questionsAndAnswers[questionNumber - 1].answers[0];
+			currentAnswer2 = questionsAndAnswers[questionNumber - 1].answers[1];
+			currentAnswer3 = questionsAndAnswers[questionNumber - 1].answers[2];
+			currentAnswer4 = questionsAndAnswers[questionNumber - 1].answers[3];
 			correctAnswer = 1;
-			loseImageHTML = "<img src='assets/images/q1L.png' />";
-			winImageHTML = "<img src='assets/images/q1W.png' />";			
-		}
-		else if(questionNumber == 2){
+			loseImageHTML = questionsAndAnswers.loseImage;
+			winImageHTML = questionsAndAnswers.winImage;			
+		},
 
-			currentQuestion = questionsAnswers.q2;
-			currentAnswer1 = questionsAnswers.q2a1;
-			currentAnswer2 = questionsAnswers.q2a2;
-			currentAnswer3 = questionsAnswers.q2a3;
-			currentAnswer4 = questionsAnswers.q2a4;
-			correctAnswer = 3;
-			loseImageHTML = "<img src='assets/images/q2L.png' />";
-			winImageHTML = "<img src='assets/images/q2W.png' />";				
-		}
-		else if(questionNumber == 3){
-
-			currentQuestion = questionsAnswers.q3;
-			currentAnswer1 = questionsAnswers.q3a1;
-			currentAnswer2 = questionsAnswers.q3a2;
-			currentAnswer3 = questionsAnswers.q3a3;
-			currentAnswer4 = questionsAnswers.q3a4;
-			correctAnswer = 4;
-			loseImageHTML = "<img src='assets/images/q3L.png' />";
-			winImageHTML = "<img src='assets/images/q3W.png' />";
-		}
-		else if(questionNumber == 4){
-
-			currentQuestion = questionsAnswers.q4;
-			currentAnswer1 = questionsAnswers.q4a1;
-			currentAnswer2 = questionsAnswers.q4a2;
-			currentAnswer3 = questionsAnswers.q4a3;
-			currentAnswer4 = questionsAnswers.q4a4;
-			correctAnswer = 2;
-			loseImageHTML = "<img src='assets/images/q4L.png' />";
-			winImageHTML = "<img src='assets/images/q4W.png' />";			
-		}
-		else if(questionNumber == 5){
-			currentQuestion = questionsAnswers.q5;
-			currentAnswer1 = questionsAnswers.q5a1;
-			currentAnswer2 = questionsAnswers.q5a2;
-			currentAnswer3 = questionsAnswers.q5a3;
-			currentAnswer4 = questionsAnswers.q5a4;
-			correctAnswer = 1;
-			loseImageHTML = "<img src='assets/images/q5L.png' />";
-			winImageHTML = "<img src='assets/images/q5W.png' />";			
-		}
-		else if(timer.questionNumber == 6){
-
-			currentQuestion = questionsAnswers.q6;
-			currentAnswer1 = questionsAnswers.q6a1;
-			currentAnswer2 = questionsAnswers.q6a2;
-			currentAnswer3 = questionsAnswers.q6a3;
-			currentAnswer4 = questionsAnswers.q6a4;
-			correctAnswer = 3;
-			loseImageHTML = "<img src='assets/images/q6L.png' />";
-			winImageHTML = "<img src='assets/images/q6W.png' />";				
-		}
-		else if(questionNumber == 7){
-
-			currentQuestion = questionsAnswers.q7;
-			currentAnswer1 = questionsAnswers.q7a1;
-			currentAnswer2 = questionsAnswers.q7a2;
-			currentAnswer3 = questionsAnswers.q7a3;
-			currentAnswer4 = questionsAnswers.q7a4;
-			correctAnswer = 4;	
-			loseImageHTML = "<img src='assets/images/q7L.png' />";
-			winImageHTML = "<img src='assets/images/q7W.png' />";				
-		}
-		else if(questionNumber == 8){
-
-			currentQuestion = questionsAnswers.q8;
-			currentAnswer1 = questionsAnswers.q8a1;
-			currentAnswer2 = questionsAnswers.q8a2;
-			currentAnswer3 = questionsAnswers.q8a3;
-			currentAnswer4 = questionsAnswers.q8a4;
-			correctAnswer = 2;	
-			loseImageHTML = "<img src='assets/images/q8L.png' />";
-			winImageHTML = "<img src='assets/images/q8W.png' />";				
-		}
-		else if(questionNumber == 9){
-
-			currentQuestion = questionsAnswers.q9;
-			currentAnswer1 = questionsAnswers.q9a1;
-			currentAnswer2 = questionsAnswers.q9a2;
-			currentAnswer3 = questionsAnswers.q9a3;
-			currentAnswer4 = questionsAnswers.q9a4;
-			correctAnswer = 3;
-			loseImageHTML = "<img src='assets/images/q9L.png' />";
-			winImageHTML = "<img src='assets/images/q9W.png' />";			
-		}
-		else if(questionNumber == 10){
-
-			currentQuestion = questionsAnswers.q10;
-			currentAnswer1 = questionsAnswers.q10a1;
-			currentAnswer2 = questionsAnswers.q10a2;
-			currentAnswer3 = questionsAnswers.q10a3;
-			currentAnswer4 = questionsAnswers.q10a4;
-			correctAnswer = 1;	
-			loseImageHTML = "<img src='assets/images/q10L.png' />";
-			winImageHTML = "<img src='assets/images/q10W.png' />";			
-		}
-	},
-
-	q1:"What city did Jazz emerge from in the early 1900's?",
-		q1a1: "New Orleans",
-		q1a2: "Memphis",
-		q1a3: "Chicago",
-		q1a4: "New York",
-	q2:"What was the name of the most famous jazz club in Harlem??",
-		q2a1: "The Cotton Club",
-		q2a2: "Studio 54",
-		q2a3: "El Morocco",
-		q2a4: "Cotton Club",	
-	q3:"At the turn of the 20th century, the term *jazz* was used interchangably with:",
-		q3a1: "Swing",
-		q3a2: "Blues",
-		q3a3: "Neo Blues",
-		q3a4: "Rag Time",	
-	q4:"What group or artist recorded the first official jazz record?",
-		q4a1: "Duke Ellington's Orchestra",
-		q4a2: "The Dixiland Jazz Band",
-		q4a3: "Jelly Roll Morton",
-		q4a4: "Joseph King Oliver",	
-	q5:"Who was known as *the Divine One*, who won an amateur singing contest as a teenager and became a leading jazz vocalist?",
-		q5a1: "Sarah Vaughan",
-		q5a2: "Louis Armstrong",
-		q5a3: "Ella Fitzgerald",
-		q5a4: "Billie Holiday",	
-	q6:"In the 1930's, Benny Goodman helped popularize what type of jazz?",
-		q6a1: "Big Band",
-		q6a2: "Be-Bop",
-		q6a3: "Swing",
-		q6a4: "Afro-Latin",	
-	q7:"What musician did NOT record on the 1959 hit record, *Kind of Blue*?",
-		q7a1: "Miles Davis",
-		q7a2: "John Coltrane",
-		q7a3: "Bill Evans",
-		q7a4: "Clifford Brown",	
-	q8:"Which of the following is NOT a Miles Davis album name?",
-		q8a1: "Bitches Brew",
-		q8a2: "Blue in Green",
-		q8a3: "TUTU",
-		q8a4: "Birth of the Cool",	
-	q9:"Which of the following is NOT a jazz musician?",
-		q9a1: "Cannonball Adderly",
-		q9a2: "John McLaughlin",
-		q9a3: "Kenny G",
-		q9a4: "Kenny Garrett",		
-	q10:"Which jazz musician is responsible for the development of *world music*, which blended jazz with non-western cultural musical styles?",
-		q10a1: "John McLaughlin",
-		q10a2: "John Coltrane",
-		q10a3: "Allan Holdsworth",
-		q10a4: "Miles Davis",	
 }
+
+var questionsAndAnswers =
+ [
+	{
+	question: "What city did Jazz emerge from in the early 1900's?",
+	answers: ["New Orleans","Memphis","Chicago","New York"],
+	loseImage: "<img src='assets/images/q1L.png' />",
+	winImage: "<img src='assets/images/q1W.png' />",
+	},
+	{
+	question: "What was the name of the most famous jazz club in Harlem?",
+	answers: ["The Cotton Club", "Studio 54", "El Morocco", "Cotton Club"],
+	loseImage: "<img src='assets/images/q1L.png' />",
+	winImage: "<img src='assets/images/q1L.png' />",
+	},
+	{
+	question: "At the turn of the 20th century, the term *jazz* was used interchangably with:",
+	answers: ["Swing", "Blues", "Neo Blues", "Rag Time"],
+	loseImage: "<img src='assets/images/q1L.png' />",
+	winImage: "<img src='assets/images/q1L.png' />",	
+	},
+	{
+	question: "What group or artist recorded the first official jazz record?",
+	answers: ["Duke Ellington's Orchestra", "The Dixiland Jazz Band", "Jelly Roll Morton", "Joseph King Oliver"],
+	loseImage: "<img src='assets/images/q1L.png' />",
+	winImage: "<img src='assets/images/q1L.png' />",
+	},
+	{
+	question: "Who was known as *the Divine One*, who won an amateur singing contest as a teenager and became a leading jazz vocalist?",
+	answers: ["Sarah Vaughan", "Louis Armstrong", "Ella Fitzgerald", "Billie Holiday"],
+	loseImage: "<img src='assets/images/q1L.png' />",
+	winImage: "<img src='assets/images/q1L.png' />",
+	},
+	{
+	question: "In the 1930's, Benny Goodman helped popularize what type of jazz?",
+	answers: ["Big Band", "Be-Bop", "Swing", "Afro-Latin"],
+	loseImage: "<img src='assets/images/q1L.png' />",
+	winImage: "<img src='assets/images/q1L.png' />",
+	},
+	{
+	question: "What musician did NOT record on the 1959 hit record, *Kind of Blue*?",
+	answers: ["Miles Davis", "John Coltrane", "Bill Evans", "Clifford Brown"],
+	loseImage: "<img src='assets/images/q1L.png' />",
+	winImage: "<img src='assets/images/q1L.png' />",
+	},
+	{
+	question: "Which of the following is NOT a Miles Davis album name?",
+	answers: ["Bitches Brew", "Blue in Green", "TUTU", "Birth of the Cool"],
+	loseImage: "<img src='assets/images/q1L.png' />",
+	winImage: "<img src='assets/images/q1L.png' />",
+	},
+	{
+	question: "Which of the following is NOT a jazz musician?",
+	answers: ["Cannonball Adderly", "John McLaughlin", "Kenny G", "Kenny Garrett"],
+	loseImage: "<img src='assets/images/q1L.png' />",
+	winImage: "<img src='assets/images/q1L.png' />",
+	},
+	{
+	question: "Which jazz musician is responsible for the development of *world music*, which blended jazz with non-western cultural musical styles?",
+	answers: ["John McLaughlin", "John Coltrane", "Allan Holdsworth", "Miles Davis"],
+	loseImage: "<img src='assets/images/q1L.png' />",
+	winImage: "<img src='assets/images/q1L.png' />",
+	},
+]
