@@ -46,7 +46,7 @@ var numUnanswered = 0;
 
 var timer = {
 
-	time:5,
+	time:45,
 
 	startRound: function(){
 		if (questionNumber != 11){												//If there are still questions to ask
@@ -85,8 +85,10 @@ var timer = {
 
 		if (timer.time == 0){													//If time reaches zero
 			clearInterval(counter2);											//Stop the counter
-			timer.time = 5;														//Return timer to original value
+			timer.time = 45;													//Return timer to original value
+			questionNumber++;													//Increase question number by 1
 			timer.startRound();													//Start round again
+
 		}
 
 	},	
@@ -114,7 +116,7 @@ var updateDisplay = {
 			correctAnswer = currentAnswer3;
 		}
 		else if (CA == 4){
-			correctAnswer = currentAnswer3;
+			correctAnswer = currentAnswer4;
 		}
 	},
 
@@ -154,7 +156,6 @@ var updateDisplay = {
 		$("#the-answers").addClass("sr-only");									//Remove answers from page
 
 		timer.betweenRound();													//Set a timer to delay next question
-		questionNumber++;														//Increment the questionNumber by 1	
 	},
 
 	finalPage: function(){
@@ -196,7 +197,7 @@ var questionsAnswers = {
 			currentAnswer2 = questionsAndAnswers[questionNumber - 1].answers[1];
 			currentAnswer3 = questionsAndAnswers[questionNumber - 1].answers[2];
 			currentAnswer4 = questionsAndAnswers[questionNumber - 1].answers[3];
-			correctAnswer = 1;
+			correctAnswer = questionsAndAnswers[questionNumber - 1].correctAnswer;
 			loseImageHTML = questionsAndAnswers.loseImage;
 			winImageHTML = questionsAndAnswers.winImage;			
 		},
@@ -208,60 +209,70 @@ var questionsAndAnswers =
 	{
 	question: "What city did Jazz emerge from in the early 1900's?",
 	answers: ["New Orleans","Memphis","Chicago","New York"],
+	correctAnswer: 1,
 	loseImage: "<img src='assets/images/q1L.png' />",
 	winImage: "<img src='assets/images/q1W.png' />",
 	},
 	{
 	question: "What was the name of the most famous jazz club in Harlem?",
 	answers: ["The Cotton Club", "Studio 54", "El Morocco", "Cotton Club"],
+	correctAnswer: 3,
 	loseImage: "<img src='assets/images/q1L.png' />",
 	winImage: "<img src='assets/images/q1L.png' />",
 	},
 	{
 	question: "At the turn of the 20th century, the term *jazz* was used interchangably with:",
 	answers: ["Swing", "Blues", "Neo Blues", "Rag Time"],
+	correctAnswer: 4,
 	loseImage: "<img src='assets/images/q1L.png' />",
 	winImage: "<img src='assets/images/q1L.png' />",	
 	},
 	{
 	question: "What group or artist recorded the first official jazz record?",
 	answers: ["Duke Ellington's Orchestra", "The Dixiland Jazz Band", "Jelly Roll Morton", "Joseph King Oliver"],
+	correctAnswer: 2,
 	loseImage: "<img src='assets/images/q1L.png' />",
 	winImage: "<img src='assets/images/q1L.png' />",
 	},
 	{
 	question: "Who was known as *the Divine One*, who won an amateur singing contest as a teenager and became a leading jazz vocalist?",
 	answers: ["Sarah Vaughan", "Louis Armstrong", "Ella Fitzgerald", "Billie Holiday"],
+	correctAnswer: 1,
 	loseImage: "<img src='assets/images/q1L.png' />",
 	winImage: "<img src='assets/images/q1L.png' />",
 	},
 	{
 	question: "In the 1930's, Benny Goodman helped popularize what type of jazz?",
 	answers: ["Big Band", "Be-Bop", "Swing", "Afro-Latin"],
+	correctAnswer: 3,
 	loseImage: "<img src='assets/images/q1L.png' />",
 	winImage: "<img src='assets/images/q1L.png' />",
 	},
 	{
 	question: "What musician did NOT record on the 1959 hit record, *Kind of Blue*?",
 	answers: ["Miles Davis", "John Coltrane", "Bill Evans", "Clifford Brown"],
+	correctAnswer: 4,
 	loseImage: "<img src='assets/images/q1L.png' />",
 	winImage: "<img src='assets/images/q1L.png' />",
 	},
 	{
 	question: "Which of the following is NOT a Miles Davis album name?",
 	answers: ["Bitches Brew", "Blue in Green", "TUTU", "Birth of the Cool"],
+	correctAnswer: 2,
 	loseImage: "<img src='assets/images/q1L.png' />",
 	winImage: "<img src='assets/images/q1L.png' />",
 	},
 	{
 	question: "Which of the following is NOT a jazz musician?",
 	answers: ["Cannonball Adderly", "John McLaughlin", "Kenny G", "Kenny Garrett"],
+	correctAnswer: 3,
 	loseImage: "<img src='assets/images/q1L.png' />",
 	winImage: "<img src='assets/images/q1L.png' />",
 	},
 	{
 	question: "Which jazz musician is responsible for the development of *world music*, which blended jazz with non-western cultural musical styles?",
 	answers: ["John McLaughlin", "John Coltrane", "Allan Holdsworth", "Miles Davis"],
+	correctAnswer: 1,
 	loseImage: "<img src='assets/images/q1L.png' />",
 	winImage: "<img src='assets/images/q1L.png' />",
 	},
