@@ -221,6 +221,9 @@ var updateDisplay = {
 		$("#reset").on("click", function (){
 			console.log('works');
 			questionNumber = 1;
+			numRight = 0;
+			numWrong = 0;
+			numUnanswered = 0;
 			timer.startRound();
 		});	
 	},
