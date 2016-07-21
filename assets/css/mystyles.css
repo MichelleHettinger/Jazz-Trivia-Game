@@ -22,7 +22,11 @@ h1 {
 	margin-left: 140px;
 	margin-top: 50px;
 }
-
+#reset{
+	color: white;
+	background-color: #3c5d6e;
+	margin-left: 85px;
+}
 
 #questions p, #time-remaining p {
 	text-align: center;
@@ -51,7 +55,6 @@ h1 {
 	cursor: pointer;
 	background-color: #3c5d6e;
 }
-
 #the-gifs {
 	margin-top: 25px;
 	margin-left: 240px;
@@ -59,4 +62,5 @@ h1 {
 
 #the-gifs img {
 	width: 100%;
+	height: 100%;
 }

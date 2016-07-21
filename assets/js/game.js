@@ -4,22 +4,35 @@ $(document).ready(function(){
 		$("#startButton").remove();
 		timer.startRound();
 	});
+
+	//Only if the question number has not reached 11
+	//Clicking on one of the answers sets current guess to a value of 1,2,3 or 4
+	//Then runs it through a checkguess function
 	$("#answer1").on("click", function (){
-		currentGuess = 1;
-		questionsAnswers.checkGuess(currentGuess);
+		if (questionNumber != 11){
+			currentGuess = 1;
+			updateDisplay.checkGuess(currentGuess);
+		}
 	});
 	$("#answer2").on("click", function (){
-		currentGuess = 2;
-		questionsAnswers.checkGuess(currentGuess);
+		if (questionNumber != 11){
+			currentGuess = 2;
+			updateDisplay.checkGuess(currentGuess);
+		}
 	});
 	$("#answer3").on("click", function (){
-		currentGuess = 3;
-		questionsAnswers.checkGuess(currentGuess);
+		if (questionNumber != 11){
+			currentGuess = 3;
+			updateDisplay.checkGuess(currentGuess);
+		}
 	});
 	$("#answer4").on("click", function (){
-		currentGuess = 4;
-		questionsAnswers.checkGuess(currentGuess);
+		if (questionNumber != 11){
+			currentGuess = 4;
+			updateDisplay.checkGuess(currentGuess);
+		}
 	});	
+
 })
 
 
@@ -50,7 +63,7 @@ var timer = {
 
 	startRound: function(){
 		if (questionNumber != 11){												//If there are still questions to ask
-		questionsAnswers.assignQuestion();										//Assign the questions	
+		updateDisplay.assignQuestion();										//Assign the questions	
 		counter = setInterval(timer.count, 1000); 								//Every second, call the count function
 		}
 
@@ -96,8 +109,20 @@ var timer = {
 
 
 var updateDisplay = {
+	assignQuestion: function (){
+		//Assign currentQuestion as well as the current answers and images
+		currentQuestion = questionsAndAnswers[questionNumber - 1].question;
+		currentAnswer1 = questionsAndAnswers[questionNumber - 1].answers[0];
+		currentAnswer2 = questionsAndAnswers[questionNumber - 1].answers[1];
+		currentAnswer3 = questionsAndAnswers[questionNumber - 1].answers[2];
+		currentAnswer4 = questionsAndAnswers[questionNumber - 1].answers[3];
+		correctAnswer = questionsAndAnswers[questionNumber - 1].correctAnswer;
+		loseImageHTML = questionsAndAnswers[questionNumber - 1].loseImage;
+		winImageHTML = questionsAndAnswers[questionNumber - 1].winImage;			
+	},
 
 	questionAnswers: function (){
+		//Display the current information to the page
 		$("#current-question").html(currentQuestion);
 		$("#answer1").html("A: " + currentAnswer1);
 		$("#answer2").html("B: " + currentAnswer2);
@@ -120,13 +145,28 @@ var updateDisplay = {
 		}
 	},
 
+	checkGuess: function(guessedLetter){
+		clearInterval(counter);																				//Stop the counter
 
+		$("#time-remaining").html("Time remaining: " + "<strong>" + timer.time + "</strong>");				//Display time on the html page
+
+		if (guessedLetter == correctAnswer){									//If the selected answer matches the correct
+			updateDisplay.correctGuess();										//Display
+			numRight++;															//Increase num of correct guesses by 1
+		}
+		else {																	//Otherwise answer is wrong
+			updateDisplay.wrongGuess();											//Display
+			numWrong++;															//Increase num of wrong guesses by 1
+		}
+	},
+
+	//Display changes depending on guessing correct, wrong or out of time
 	correctGuess: function(){
 		$("#current-question").html("Correct!");								//Update message
 
 		updateDisplay.betweenGuesses();											//Update by removing answers	
 
-		$("#the-gifs").html(winImageHTML);										//Updatet with the winning gif and setting timer			
+		$("#the-gifs").html(winImageHTML);										//Update with the winning gif and setting timer			
 	},
 
 	wrongGuess: function(){
@@ -150,59 +190,42 @@ var updateDisplay = {
 		updateDisplay.betweenGuesses();															//Update by removing answers and adding gifs	
 	},
 
-
-
+	//Then the betweenGuesses function is called regardless of the above, to set a timer and display a gif
 	betweenGuesses: function(){
 		$("#the-answers").addClass("sr-only");									//Remove answers from page
 
 		timer.betweenRound();													//Set a timer to delay next question
 	},
 
-	finalPage: function(){
-		$("#the-gifs").remove();												//Remove the last  gif
 
-		//Update with the following:
+
+
+	finalPage: function(){
+		$("#time-remaining").html(" ");
+		$("#current-question").html(" ");
+
+		//Update answers div with the following:
 		$("#answer1").html("Here's how you did.");
 		$("#answer2").html("Number Correct: " + numRight);
 		$("#answer3").html("Number Wrong: " + numWrong);		
 		$("#answer4").html("Number Unanswered: " + numUnanswered);
-		$("#the-answers").removeClass("sr-only");								//Make div visible again from page			
+
+		//Make  answers div div visible again
+		$("#the-answers").removeClass("sr-only");	
+		$("#the-answers").removeClass("button");	
+
+		//Add reset button to page
+		$("#the-gifs").html("<button class='btn btn-large' id='reset'>Reset</button>");
+
+		//Make reset button clickable
+		$("#reset").on("click", function (){
+			console.log('works');
+			questionNumber = 1;
+			timer.startRound();
+		});	
 	},
 }
 
-
-var questionsAnswers = {
-
-	checkGuess: function(guessedLetter){
-		clearInterval(counter);													//Stop the counter
-
-		$("#time-remaining").html("Time remaining: " + "<strong>" + timer.time + "</strong>");				//Display time on the html page
-
-		if (guessedLetter == correctAnswer){									//If the selected answer matches the correct
-			updateDisplay.correctGuess();										//Display
-			numRight++;															//Increase num of correct guesses by 1
-		}
-		else {																	//Otherwise answer is wrong
-			updateDisplay.wrongGuess();											//Display
-			numWrong++;															//Increase num of wrong guesses by 1
-		}
-		
-	},
-
-	assignQuestion: function (){
-
-		//Assign currentQuestion as well as the current answers and images
-			currentQuestion = questionsAndAnswers[questionNumber - 1].question;
-			currentAnswer1 = questionsAndAnswers[questionNumber - 1].answers[0];
-			currentAnswer2 = questionsAndAnswers[questionNumber - 1].answers[1];
-			currentAnswer3 = questionsAndAnswers[questionNumber - 1].answers[2];
-			currentAnswer4 = questionsAndAnswers[questionNumber - 1].answers[3];
-			correctAnswer = questionsAndAnswers[questionNumber - 1].correctAnswer;
-			loseImageHTML = questionsAndAnswers[questionNumber - 1].loseImage;
-			winImageHTML = questionsAndAnswers[questionNumber - 1].winImage;			
-		},
-
-}
 
 var questionsAndAnswers =
  [
@@ -273,7 +296,10 @@ var questionsAndAnswers =
 	question: "Which jazz musician is responsible for the development of *world music*, which blended jazz with non-western cultural musical styles?",
 	answers: ["John McLaughlin", "John Coltrane", "Allan Holdsworth", "Miles Davis"],
 	correctAnswer: 1,
-	loseImage: "<img src='assets/images/q10L.gif' />",
+	loseImage: "<img src='assets/images/q10L.jpg' />",
 	winImage: "<img src='assets/images/q10W.jpg' />",
 	},
+
+
+
 ]
