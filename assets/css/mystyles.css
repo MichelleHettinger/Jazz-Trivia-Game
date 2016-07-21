@@ -57,10 +57,10 @@ h1 {
 }
 #the-gifs {
 	margin-top: 25px;
-	margin-left: 240px;
+	margin-left: 275px;
 }
 
 #the-gifs img {
-	width: 100%;
-	height: 100%;
+	width: 200px;
+	height: 200px;
 }
