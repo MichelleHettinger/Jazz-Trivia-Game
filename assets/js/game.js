@@ -63,7 +63,7 @@ var timer = {
 
 	startRound: function(){
 		if (questionNumber != 11){												//If there are still questions to ask
-		updateDisplay.assignQuestion();										//Assign the questions	
+		updateDisplay.assignQuestion();											//Assign the questions	
 		counter = setInterval(timer.count, 1000); 								//Every second, call the count function
 		}
 
@@ -76,7 +76,7 @@ var timer = {
 		$("#the-answers").removeClass("sr-only");								//For rounds 2-9, make the div visible again
 		$("#the-gifs").html("");												//Replace the gif with emptiness
 
-		updateDisplay.questionAnswers();											//Display the questions and answers
+		updateDisplay.questionAnswers();										//Display the questions and answers
 
 		$("#time-remaining").html("Time remaining: " + "<strong>" + timer.time + "</strong>");				//Display time on the html page
 		timer.time--;															//Decrease time by 1
@@ -181,7 +181,7 @@ var updateDisplay = {
 	outOfTime: function(){
 		updateDisplay.convertCorrectAnswerToText(correctAnswer);								//Convert correctAnswer (a numerical value) to the string containing the right answer
 
-		$("#time-remaining").html("Time remaining: " + "<strong>" + timer.time + "</strong>");								//Display time on the html page
+		$("#time-remaining").html("Time remaining: " + "<strong>" + timer.time + "</strong>");	//Display time on the html page
 		$("#time-remaining").append("<p>Out of time!</p>");										//Write a paragraph to the page that says out of time
 
 		$("#current-question").html("The correct answer was: " + correctAnswer);				//Update with the correct answer as well
@@ -196,9 +196,6 @@ var updateDisplay = {
 
 		timer.betweenRound();													//Set a timer to delay next question
 	},
-
-
-
 
 	finalPage: function(){
 		$("#time-remaining").html(" ");
@@ -241,7 +238,7 @@ var questionsAndAnswers =
 	},
 	{
 	question: "What was the name of the most famous jazz club in Harlem?",
-	answers: ["The Cotton Club", "Studio 54", "El Morocco", "Cotton Club"],
+	answers: ["House of Blues", "Studio 54", "El Morocco", "Cotton Club"],
 	correctAnswer: 3,
 	loseImage: "<img src='assets/images/q2L.gif' />",
 	winImage: "<img src='assets/images/q2W.gif' />",
@@ -302,7 +299,4 @@ var questionsAndAnswers =
 	loseImage: "<img src='assets/images/q10L.jpg' />",
 	winImage: "<img src='assets/images/q10W.jpg' />",
 	},
-
-
-
 ]
