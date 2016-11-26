@@ -4,4 +4,5 @@ Think you know jazz? Test your knowledge with this timed 10 question quiz! After
 To run locally:
 
 1) Clone or download the repository.
+
 2) Open index.html in your web browser.
